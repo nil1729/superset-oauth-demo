@@ -37,8 +37,9 @@ services:
     ports:
       - "8088:8088"
     networks:
-      - www
-      - internal
+      www:
+      internal:
+        ipv4_address: ${SUPERSET_IP}
 
   superset-init:
     container_name: superset-init
@@ -57,6 +58,16 @@ services:
       - ${PWD}/superset/superset_config.py:/app/superset_config.py
     networks:
       - internal
+  
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare
+    hostname: cloudflare
+    networks:
+      - internal
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    environment:
+      - CLOUDFLARE_TOKEN=${CLOUDFLARE_TOKEN}
 
 volumes:
   superser-backend-db-data:
