@@ -32,8 +32,11 @@ services:
     environment:
       - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
       - SUPERSET_CONFIG_PATH=/app/superset_config.py
+      - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
+      - GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}
     volumes:
       - ${PWD}/superset/superset_config.py:/app/superset_config.py
+      - ${PWD}/superset/custom_sso_security_manager.py:/app/custom_sso_security_manager.py
     ports:
       - "8088:8088"
     networks:
@@ -52,10 +55,13 @@ services:
       superser-backend-db:
         condition: service_healthy
     environment:
+      - SUPERSET_ADMIN_USERNAME=${SUPERSET_ADMIN_USERNAME}
+      - SUPERSET_ADMIN_PASSWORD=${SUPERSET_ADMIN_PASSWORD}
       - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
       - SUPERSET_CONFIG_PATH=/app/superset_config.py
     volumes:
       - ${PWD}/superset/superset_config.py:/app/superset_config.py
+      - ${PWD}/superset/custom_sso_security_manager.py:/app/custom_sso_security_manager.py
     networks:
       - internal
   

@@ -8,12 +8,13 @@ superset db upgrade
 
 # create admin user
 echo "create admin user"
+echo "SUPERSET_ADMIN_USERNAME: $SUPERSET_ADMIN_USERNAME"
 superset fab create-admin \
-    --username admin \
+    --username "$SUPERSET_ADMIN_USERNAME" \
     --firstname Superset \
     --lastname Admin \
-    --email admin@superset.com \
-    --password admin
+    --email "${SUPERSET_ADMIN_USERNAME}@superset.com" \
+    --password "$SUPERSET_ADMIN_PASSWORD"
 
 # setup roles
 echo "setup roles"
