@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  superser-backend-db:
+    container_name: superser-backend-db
+    hostname: superser-backend-db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${SUPERSET_BACKEND_DB_USER}
+      POSTGRES_PASSWORD: ${SUPERSET_BACKEND_DB_PASSWORD}
+      POSTGRES_DB: ${SUPERSET_BACKEND_DB_NAME}
+    volumes:
+      - superser-backend-db-data:/var/lib/postgresql/data
+    networks:
+      internal:
+        ipv4_address: ${SUPERSET_BACKEND_DB_IP}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${SUPERSET_BACKEND_DB_USER}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+  superset:
+    container_name: superset
+    hostname: superset
+    build:
+      context: ${PWD}/superset
+      dockerfile: Dockerfile
+    depends_on:
+      superser-backend-db:
+        condition: service_healthy
+    environment:
+      - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
+      - SUPERSET_CONFIG_PATH=/app/superset_config.py
+    volumes:
+      - ${PWD}/superset/superset_config.py:/app/superset_config.py
+    ports:
+      - "8088:8088"
+    networks:
+      - www
+      - internal
+
+  superset-init:
+    container_name: superset-init
+    hostname: superset-init
+    build:
+      context: ${PWD}/superset
+      dockerfile: Dockerfile
+    command: "/opt/bin/docker-init.sh"
+    depends_on:
+      superser-backend-db:
+        condition: service_healthy
+    environment:
+      - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
+      - SUPERSET_CONFIG_PATH=/app/superset_config.py
+    volumes:
+      - ${PWD}/superset/superset_config.py:/app/superset_config.py
+    networks:
+      - internal
+
+volumes:
+  superser-backend-db-data:
+
+networks:
+  internal:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${INTERNAL_SUBNET}
+  www:
