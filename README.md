@@ -1,11 +1,11 @@
 ## Superset OAuth2
 
-This is a guide to setup Superset with Google OAuth2.
+This is a guide to set up Superset with Google OAuth2.
 
 ### Considerations
 
-- To configure SSO with it's recommended to host Superset behind a reverse proxy (e.g. Nginx) and use SSL. [Read More](https://superset.apache.org/docs/installation/configuring-superset/#configuration-behind-a-load-balancer)
-- Here I used [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/tunnel/) as reverse proxy to expose Superset to the internet with HTTPS.
+- To configure SSO - deploying Superset behind a reverse proxy (e.g. Nginx) and using SSL is recommended. [Read More](https://superset.apache.org/docs/installation/configuring-superset/#configuration-behind-a-load-balancer)
+- Here I used [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/tunnel/) as a reverse proxy to expose Superset to the internet with HTTPS.
 - I have used [Google OAuth](https://developers.google.com/identity/protocols/oauth2) for this guide, but superset can be configured with other OAuth providers as well. (Microsoft, Github, etc.)
 
 ### Running the project locally
@@ -16,7 +16,7 @@ This is a guide to setup Superset with Google OAuth2.
 
 - Google OAuth Client ID and Secret. Please follow this [guide](https://developers.google.com/identity/protocols/oauth2/web-server).
 
-- Please use `amd64` architecture for running this project. Encountered runtime issues with M1 Mac (arm64 architecture) as `superset` image are not available for `arm64`, the version used in this project.
+- Please use `amd64` architecture for running this project. Encountered runtime issues with M1 Mac (arm64 architecture) as `superset` images are unavailable for `arm64`, the version used in this project.
 
 #### Setting up environment variables
 
