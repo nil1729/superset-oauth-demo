@@ -13,8 +13,13 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
                 "userinfo"
             )
             user_info = user_info_response.json()
+            # parse the email and extract username before @
+            username = user_info["email"].split("@")[0]
             return {
                 "name": user_info["name"],
                 "email": user_info["email"],
-                "username": user_info["email"],
+                # make sure to return a unique username for the user
+                # email is a good candidate
+                # in case of SSO integration at organization level you can use the username of `username@org.domain`
+                "username": username,
             }
