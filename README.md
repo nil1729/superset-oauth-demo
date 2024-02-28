@@ -55,6 +55,9 @@ Access Superset at `https://<cloudflare-tunnel-url>`
 - [Superset OAuth2 Configuration](https://superset.apache.org/docs/installation/configuring-superset/#custom-oauth2-configuration)
 - [Superset behind a Load Balancer](https://superset.apache.org/docs/installation/configuring-superset/#configuration-behind-a-load-balancer)
 - [Superset Metadata Database](https://superset.apache.org/docs/installation/configuring-superset/#using-a-production-metastore)
+- [Google OpenID Configuration](https://accounts.google.com/.well-known/openid-configuration)
+- [Get User Info from Google OAuth](https://stackoverflow.com/questions/7130648/get-user-info-via-google-api)
+- [Google OpenID Connect Docs](https://developers.google.com/identity/openid-connect/openid-connect#obtaininguserprofileinformation)
 
 ---
 
